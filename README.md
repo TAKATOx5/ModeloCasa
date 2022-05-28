@@ -1,0 +1,2 @@
+# ModeloCasa
+Graficacion
