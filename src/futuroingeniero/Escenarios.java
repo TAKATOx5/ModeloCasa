@@ -15,7 +15,7 @@ public class Escenarios {
     Scanner lector = new Scanner(System.in);          
         public String[][] escenarioCasa() {
         String[][] matriz = {
-            {"PB", "CA", "CA", "CA", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB","PB"},
+            {"PB", "ME", "ME", "ME", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB", "PB","PB"},
             {"PB", "  ", "  ", "  ", "PB", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "SO", "SO", "SO", "PB"},
             {"PB", "  ", "  ", "  ", "PB", "  ", "  ", "SI", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "SO", "PB"},
             {"PB", "    ", "  ", "  ", "PB", "  ", "SI", "ME", "SI", "  ", "  ", "  ", "  ", "  ", "  ", "SO", "PB"},
