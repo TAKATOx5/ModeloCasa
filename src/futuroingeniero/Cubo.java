@@ -130,7 +130,7 @@ public class Cubo {
     glTexCoord2d(1, 0); glVertex3f(-size/2,-size/2,-size/2);
     glEnd();
     }
-  public void mitadCuarto3(float size){
+ public void mitadCuarto3(float size){
     glBegin(GL_QUADS);
     //CARA FRONTAL
     glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
@@ -171,6 +171,7 @@ public class Cubo {
     }
  
  
+
  public void caraDerecha(float size){
     glBegin(GL_QUADS);
     glNormal3f(1,0,0);
