@@ -54,11 +54,13 @@ public class Main {
         String[][] matriz=escena.escenarioCasa();
         Texture tPared = loadTexture("pared");
         Texture tParedBlanca = loadTexture("paredFinal");
+        Texture tCuarto1 = loadTexture("cuarto1");
+        Texture tCuarto2 = loadTexture("cuarto2");
         Texture tCama = loadTexture("camalateral");
         Texture tCamaArriba = loadTexture("camaarriba");
         Texture tCocina= loadTexture("pisoCocina");
         Texture tRestoCasa= loadTexture("pared");
-        Texture tSilla = loadTexture("cama2");//SILLAS
+        Texture tSilla = loadTexture("mesaarriba");//SILLAS
         Texture tMesa = loadTexture("cama2");//MESA
         Texture tMesaarriba = loadTexture("mesaarriba");//MESA
         Texture tRefri = loadTexture("cama2");//SILLAS
@@ -92,19 +94,8 @@ public class Main {
                 glTexCoord2f(0, 20); glVertex3f(20.5f, -0.5f, -0.5f);
            }
             glEnd();
-            for(int x=0;x<matriz.length;x++){
-                for(int z=0;z<matriz[x].length;z++){
-                    glTranslatef(x,0,z);
-                    if(matriz[x][z].equals("CA")){
-                        tCama.bind();
-                        cubo.medioCubo(1);
-                        tCamaArriba.bind();
-                        cubo.arribaCubo(1);
-                        //cubo.triangulo();
-                    }
-                    glTranslatef(-x,-0,-z);
-                }
-            }
+           pintarCuarto1(cubo, escena, tCuarto1, tCuarto2,tParedBlanca, matriz);
+           pintarCama(cubo, escena, tCama,tCamaArriba, matriz);
            pintarParedBlanca(cubo, escena,tParedBlanca,matriz);
            pintarSillas(cubo, escena,tSilla,matriz);
            pintarMesas(cubo, escena,tMesaarriba,matriz);
@@ -116,11 +107,41 @@ public class Main {
            pintarLavabo(cubo, escena,tLavabo,matriz);
            pintarSillon(cubo, escena, tSillones,matriz);
            pintarMuebles(cubo, escena, tMuebles,matriz);
-           
-           
             controles();
             Display.update();
         }
+    }
+        public static void pintarCuarto1(Cubo cubo,Escenarios escena, Texture tCuarto1, Texture tCuarto2,Texture tParedBlanca, String[][] matriz){
+            for(int x=0;x<matriz.length;x++){
+                for(int z=0;z<matriz[x].length;z++){
+                    glTranslatef(x,0,z);
+                    if(matriz[x][z].equals("C1")){
+                        tParedBlanca.bind();
+                        cubo.mitadCuarto2(1);
+                        tCuarto2.bind();
+                        cubo.caraDerecha(1);
+                    }
+                     if(matriz[x][z].equals("C2")){
+                       tParedBlanca.bind();
+                        cubo.mitadCuarto3(1);
+                        tCuarto2.bind();
+                        cubo.mitadCuarto1(1);
+                    }
+                    if(matriz[x][z].equals("C3")){
+                        tParedBlanca.bind();
+                        cubo.mitadCuarto2(1);
+                        tCuarto1.bind();
+                        cubo.caraDerecha(1);
+                    }
+                     if(matriz[x][z].equals("C4")){
+                       tParedBlanca.bind();
+                        cubo.mitadCuarto3(1);
+                        tCuarto1.bind();
+                        cubo.mitadCuarto1(1);
+                    }
+                    glTranslatef(-x,-0,-z);
+                }
+            }
     }
     public static void pintarParedBlanca(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
          tParedBlanca.bind();
@@ -134,13 +155,28 @@ public class Main {
                 }
     }
     }
+    public static void pintarCama(Cubo cubo,Escenarios escena, Texture tCama, Texture tCamaArriba, String[][] matriz){
+            for(int x=0;x<matriz.length;x++){
+                for(int z=0;z<matriz[x].length;z++){
+                    glTranslatef(x,0,z);
+                    if(matriz[x][z].equals("CA")){
+                        tCama.bind();
+                        cubo.medioCubo(1);
+                        tCamaArriba.bind();
+                        cubo.arribaCubo(1);
+                        //cubo.triangulo();
+                    }
+                    glTranslatef(-x,-0,-z);
+                }
+            }
+    }
         public static void pintarSillas(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
          tParedBlanca.bind();
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("SI") ){
-                        cubo.drawCube(1);
+                        cubo.Silla(1);
                     }
                     glTranslatef(-x,0,-z);
                 }
@@ -253,8 +289,7 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("ME") ){
-                        //cubo.arribaCubo(1);
-                        cubo.palito(1);
+                        cubo.Mesa(1);
                     }
                     glTranslatef(-x,0,-z);
                 }
