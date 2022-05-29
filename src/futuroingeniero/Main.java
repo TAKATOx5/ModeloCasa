@@ -33,11 +33,13 @@ public class Main {
     }
     public static void initGL() {
         cam=new Camera(70,(float) Display.getWidth()/Display.getHeight(), 0.3f,1000);
-       /* cam2=new Camera(70,(float) Display.getWidth()/Display.getHeight(), 0.3f,1000);
-        cam2.setX(-2);
-        cam2.setY(2);
-        cam2.setZ(-2);
-        */
+        /*cam2=new Camera(70,(float) Display.getWidth()/Display.getHeight(), 0.3f,1000);
+        cam2.setX(-9);
+        cam2.setY(-2);
+        cam2.setZ(2);
+        cam2.setRx(33);
+        cam2.setRy(180);
+        cam2.setRz(0);*/
         glClearColor(0, 0, 0, 1);
         glEnable(GL_DEPTH_TEST);// Si dibujamos objetos, no se sobreponen, no se mezclan
         glEnable(GL_CULL_FACE);// Optimizacion, dibujar solo lo que está en pantalla
@@ -79,24 +81,17 @@ public class Main {
             glShadeModel(GL_SMOOTH);
             glLoadIdentity();
             cam.useView();
-        tCocina.bind();
-        glBegin(GL_QUADS);
-            {
-                glTexCoord2f(0,0); glVertex3f(-0.5f, -0.5f, -0.5f);
-                glTexCoord2f(10, 0); glVertex3f(-0.5f, -0.5f, 4.5f);
-                glTexCoord2f(10, 10); glVertex3f(5.5f, -0.5f, 4.5f);
-                glTexCoord2f(0,10); glVertex3f(5.5f, -0.5f, -0.5f);
-           }
-            glEnd();
+            //tRestoCasa.setTextureFilter(5);
             tRestoCasa.bind();
            glBegin(GL_QUADS);
             {
                 glTexCoord2f(0,0); glVertex3f(-0.5f, -0.5f, -0.5f);
-                glTexCoord2f(20, 0); glVertex3f(-0.5f, -0.5f, 18.5f);
-                glTexCoord2f(20, 20); glVertex3f(20.5f, -0.5f, 18.5f);
-                glTexCoord2f(0, 20); glVertex3f(20.5f, -0.5f, -0.5f);
+                glTexCoord2f(10, 0); glVertex3f(-0.5f, -0.5f, 18.5f);
+                glTexCoord2f(10, 10); glVertex3f(20.5f, -0.5f, 18.5f);
+                glTexCoord2f(0, 10); glVertex3f(20.5f, -0.5f, -0.5f);
            }
             glEnd();
+           //pintarSuelo2(tRestoCasa, tCocina);
            pintarCuarto1(cubo, escena, tCuarto1, tCuarto2,tParedBlanca, matriz);
            pintarBaño(cubo, escena, tParedBaño,tParedBaño2, tParedBañoFuera,tParedBlanca, matriz);
            pintaParedFueraBaño(cubo, escena, tCuarto1, tParedBaño2, tParedBañoFuera, tCuarto2,tCuarto1Fuera, matriz);
@@ -113,8 +108,9 @@ public class Main {
            pintarLavabo(cubo, escena,tLavabo,matriz);
            pintarSillon(cubo, escena, tSillones,matriz);
            pintarMuebles(cubo, escena, tMuebles,matriz);
-            controles();
-            Display.update();
+           pintarParedCasa2(cubo, escena, tParedBañoFuera,tParedBlanca,tparedCocina, matriz);
+           controles();
+           Display.update();
         }
     }
        public static void pintarCuarto1(Cubo cubo,Escenarios escena, Texture tCuarto1, Texture tCuarto2,Texture tParedBlanca, String[][] matriz){
@@ -230,8 +226,6 @@ public class Main {
                          tCama.setTextureFilter(5);
                          tCamaArriba.bind();
                          cubo.Cocina1(1);
-                        
-                        //cubo.triangulo();
                     }
                     glTranslatef(-x,-0,-z);
                 }
@@ -264,6 +258,32 @@ public class Main {
                 }
     }
     }
+        public static void pintarParedCasa2(Cubo cubo,Escenarios escena, Texture tParedFuera, Texture tParedFinal,Texture tParedCocina, String[][] matriz){
+            for(int x=0;x<matriz.length;x++){
+                for(int z=0;z<matriz[x].length;z++){
+                    glTranslatef(x,0,z);
+                    if(matriz[x][z].equals("D1") ){
+                        tParedCocina.bind();
+                        cubo.caraDerecha(1);
+                    }
+                    glTranslatef(-x,0,-z);
+                }
+    }
+    }
+        
+        
+          public static void pintarSuelo2(Texture tRestoCasa, Texture tCocina){
+           /*tCocina.bind();
+           glBegin(GL_QUADS);
+            {
+                glTexCoord2f(0,0); glVertex3f(-0.5f, -0.5f, -0.5f);
+                glTexCoord2f(10, 0); glVertex3f(-0.5f, -0.5f, 4.5f);
+                glTexCoord2f(10, 10); glVertex3f(5.5f, -0.5f, 4.5f);
+                glTexCoord2f(0,10); glVertex3f(5.5f, -0.5f, -0.5f);
+           }
+            glEnd();*/
+ 
+            }
     public static void pintarMuebles(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
          tParedBlanca.bind();
             for(int x=0;x<matriz.length;x++){
@@ -389,7 +409,6 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
     
 
     public static void controles() {
-        Escenarios escena= new Escenarios();
         boolean forward=Keyboard.isKeyDown(Keyboard.KEY_W);
         boolean backward=Keyboard.isKeyDown(Keyboard.KEY_S);
         boolean left=Keyboard.isKeyDown(Keyboard.KEY_A);
@@ -408,6 +427,9 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
             System.out.println("coorX=" + cam.getX() );
             System.out.println("coorY=" + cam.getY() );
             System.out.println("coorZ=" + cam.getZ() );
+            System.out.println("EcoorX=" + cam.getRx() );
+            System.out.println("EcoorY=" + cam.getRy() );
+            System.out.println("EcoorZ=" + cam.getRz() );
         }
          if (forward ) {
             cam.moveZ(velMov);    
