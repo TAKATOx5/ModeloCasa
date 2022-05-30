@@ -76,13 +76,14 @@ public class Main {
         //ESTUFA
         Texture tEstufa = loadTexture("estufaFrente");
         Texture tEstufaA = loadTexture("estufaArriba");
-
-        
+        Texture tMuebleCA=loadTexture("muebleCocinaA");
+        Texture tMuebleC=loadTexture("muebleCocina");
+        Texture tMuebleCentro=loadTexture("muebleCentro");
         Texture tMuebleCocina = loadTexture("cama2");//SILLAS
         Texture tPuerta = loadTexture("cama2");//SILLAS
         Texture tBañera = loadTexture("cama2");//SILLAS
         Texture tLavabo = loadTexture("cama2");//SILLAS
-        Texture tSillones = loadTexture("cama2");//SILLAS
+        Texture tSillones = loadTexture("sofa");//SILLAS
         Texture tMuebles = loadTexture("cama2");//SILLAS
         while (!Display.isCloseRequested()) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -111,8 +112,14 @@ public class Main {
            //COCINA
            pintarCocina1(cubo, escena, tparedCocina,tParedBlanca, matriz);
            pintarCocina2(cubo,escena,tParedBañoFuera, tparedCocina,tCocinaInterior,tParedBlanca,matriz);
-          pintarEstufa(cubo, escena,tEstufa,tEstufaA,matriz);
+           pintarEstufa(cubo, escena,tEstufa,tEstufaA,matriz);
+           pintarMuebleCocina(cubo, escena,tMuebleCA,tMuebleC, matriz);
 
+
+            //Centro
+          pintarSillon(cubo, escena, tSillones,matriz);
+          pintarSofaEnmedio(cubo, escena, tSillones,tMuebleCentro,matriz);
+           
            
            pintarBaño2(cubo,escena, tBaño,tParedBlanca,tVentana, matriz);
            pintarVentana(cubo,escena,tVentana,tParedBañoFuera,tParedBlanca,matriz);
@@ -122,11 +129,9 @@ public class Main {
            pintarSillas(cubo, escena,tSilla,matriz);
            pintarMesas(cubo, escena,tMesaarriba,matriz);
            pintarRefri(cubo, escena, tRefri,matriz);
-           pintarMuebleCocina(cubo, escena,tMuebleCocina,matriz);
            pintarPuerta(cubo, escena,tPuerta,matriz);
            pintarBañera(cubo, escena, tBañera,matriz);
            pintarLavabo(cubo, escena,tLavabo,matriz);
-           pintarSillon(cubo, escena, tSillones,matriz);
            pintarMuebles(cubo, escena, tMuebles,matriz);
            controles();
            Display.update();
@@ -456,13 +461,15 @@ public class Main {
                 }
     }
     }
-   public static void pintarMuebleCocina(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
-         tParedBlanca.bind();
+   public static void pintarMuebleCocina(Cubo cubo,Escenarios escena, Texture tMuebleC,Texture tMuebleCA,String[][] matriz){
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("MC") ){
-                        cubo.drawCube(1);
+                       tMuebleC.bind();
+                        cubo.CaraSuperior(1);
+                    tMuebleCA.bind();
+                    cubo.caraFrontal2(1);
                     }
 
                     glTranslatef(-x,0,-z);
@@ -507,14 +514,46 @@ public class Main {
                 }
     }
     }
-    public static void pintarSillon(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
-         tParedBlanca.bind();
+    public static void pintarSofaEnmedio(Cubo cubo,Escenarios escena, Texture tParedBlanca,Texture tMuebleCentro,String[][] matriz){
+         
+            for(int x=0;x<matriz.length;x++){
+                for(int z=0;z<matriz[x].length;z++){
+                    glTranslatef(x,0,z);
+                    if(matriz[x][z].equals("SE") ){
+                        tParedBlanca.bind();
+                        cubo.pintarSofaEnmedio(1);
+                        
+                    }
+                       if(matriz[x][z].equals("CE") ){
+                        tMuebleCentro.bind();
+                        cubo.pintarSofaEnmedio(1);
+                    }
+
+                    glTranslatef(-x,0,-z);
+                }
+    }
+    }
+
+public static void pintarSillon(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
+         
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("SO") ){
-                        cubo.drawCube(1);
+                        tParedBlanca.bind();
+                        cubo.pintarSofa(1);
+                        
                     }
+                    if(matriz[x][z].equals("S2") ){
+                        tParedBlanca.bind();
+                        cubo.pintarSofa2(1);
+                    }
+                       if(matriz[x][z].equals("S3") ){
+                        tParedBlanca.bind();
+                          cubo.pintarSofa(1);
+                        cubo.pintarSofa2(1);
+                    }
+                    
                     glTranslatef(-x,0,-z);
                 }
     }

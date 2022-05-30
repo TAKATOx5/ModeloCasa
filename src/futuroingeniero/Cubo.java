@@ -51,16 +51,7 @@ public class Cubo {
     glTexCoord2d(1, 0); glVertex3f(-size/2,-size/2,-size/2);
     glEnd();
     }
-    public void CaraSuperior(float size){
-    glBegin(GL_QUADS);
-    glNormal3f(0,1,0);
-    glTexCoord2d(0, 0); glVertex3f(-size/2,size/32,size/2);
-    glTexCoord2d(0, 1); glVertex3f(size/2,size/32,size/2);
-    glTexCoord2d(1, 1); glVertex3f(size/2,size/32,-size/2);
-    glTexCoord2d(1, 0); glVertex3f(-size/2,size/32,-size/2);
-        glEnd();
 
-    }
     public void cuboBaño(float size){
     glBegin(GL_QUADS);
     //CARA FRONTAL
@@ -228,16 +219,35 @@ public class Cubo {
     glEnd();
     }
     
+    public void CaraSuperior(float size){
+    glBegin(GL_QUADS);
+    glNormal3f(0,1,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,size/10,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,size/10,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/10,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/10,-size/2);
+     glEnd();
+    }
       public void caraFrontalMitad(float size){
     glBegin(GL_QUADS);
-    glNormal3f(0,0,1);
-    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
-    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,size/2);
-    glTexCoord2d(1, 1); glVertex3f(size/2,size/2,size/2);
-    glTexCoord2d(1, 0); glVertex3f(-size/2,size/2,size/2);
+    glNormal3f(1,0,0);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/10,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/10,size/2);
      glEnd();
   }
- 
+   public void caraFrontal2(float size){
+    glBegin(GL_QUADS);
+    glNormal3f(0,0,-1);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/10,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/10,-size/2);
+     glEnd();
+  }
+      
+      
   public void caraFrontal(float size){
     glBegin(GL_QUADS);
     glNormal3f(0,0,-1);
@@ -247,6 +257,10 @@ public class Cubo {
     glTexCoord2d(1, 0); glVertex3f(size/2,size/2,-size/2);
      glEnd();
   }
+  public void CaraSuperiorMitad(float size){
+      
+  }
+  
  public void caraLateralDerecha(float size){
     glBegin(GL_QUADS);
     glNormal3f(0,0,1);
@@ -346,6 +360,116 @@ public class Cubo {
     glTexCoord2d(1, 0); glVertex3f(-size/2,-size/4,-size/2);
     glEnd();
     }
+ 
+  public void pintarSofa(float size){
+     glBegin(GL_QUADS);
+    //CARA FRONTAL
+     glNormal3f(0,0,1);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,-size/2.1f);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2.1f);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/4,-size/2.1f);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/4,-size/2.1f);
+    glNormal3f(0,0,1);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,size/2);
+    //Cara Lateral IZQ
+    glNormal3f(-1,0,0);    
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/512,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,-size/2);
+    //Cara derechagggg
+    glNormal3f(1,0,0);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/512,size/2);
+    //Cara superior
+    glNormal3f(0,1,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,size/512,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,size/512,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,-size/2);
+    //Cara inferior SIN
+
+    glEnd();
+    }
+  public void pintarSofaEnmedio(float size){
+    glBegin(GL_QUADS);
+    glNormal3f(0,0,1);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,size/2);
+    //Cara PosteriorSIN
+   glNormal3f(0,0,-1);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/512,-size/2);
+    //Cara Lateral IZQ
+    glNormal3f(-1,0,0);    
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/512,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,-size/2);
+    //Cara derechagggg
+    glNormal3f(1,0,0);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/512,size/2);
+    //Cara superior
+    glNormal3f(0,1,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,size/512,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,size/512,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,-size/2);
+    //Cara inferior SIN
+
+    glEnd();
+    }
+  
+    public void pintarSofa2(float size){
+     glBegin(GL_QUADS);
+        glNormal3f(1,0,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2.1f,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2.1f,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2.1f,size/4,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2.1f,size/4,size/2);
+
+    //CARA FRONTAL
+    glNormal3f(0,0,1);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,size/2);
+    //Cara PosteriorSIN
+    //Cara Lateral IZQ
+    glNormal3f(-1,0,0);    
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/512,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,-size/2);
+    //Cara derechagggg
+    glNormal3f(1,0,0);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/512,size/2);
+    //Cara superior
+    glNormal3f(0,1,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,size/512,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,size/512,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/512,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/512,-size/2);
+    //Cara inferior SIN
+
+    glEnd();
+    }
+ 
  public void medioCubo(float size){
      glBegin(GL_QUADS);
     //CARA FRONTAL
