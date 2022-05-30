@@ -57,7 +57,7 @@ public class Main {
         Texture tCuarto2 = loadTexture("cuarto2");
         Texture tParedBaño = loadTexture("paredBaño");
         Texture tParedBaño2 = loadTexture("paredFinal");
-       Texture tBaño = loadTexture("baño2");
+        Texture tBaño = loadTexture("baño2");
 
         Texture tParedBañoFuera = loadTexture("paredFuera");
         Texture tCuarto1Fuera = loadTexture("paredFCuartoFuera");
@@ -69,6 +69,11 @@ public class Main {
         Texture tparedCocina= loadTexture("paredcocina");
         Texture tCocinaInterior =loadTexture("cocinainterior");
         Texture tRestoCasa= loadTexture("pared");
+        
+        //PISO
+        Texture tPisoCocina= loadTexture("pisoCocina2");
+        Texture tCesped= loadTexture("cesped");
+
         Texture tSilla = loadTexture("mesaarriba");//SILLAS
         Texture tMesa = loadTexture("cama2");//MESA
         Texture tMesaarriba = loadTexture("mesaarriba");//MESA
@@ -79,7 +84,13 @@ public class Main {
         Texture tMuebleCA=loadTexture("muebleCocinaA");
         Texture tMuebleC=loadTexture("muebleCocina");
         Texture tMuebleCentro=loadTexture("muebleCentro");
-        Texture tMuebleCocina = loadTexture("cama2");//SILLAS
+        Texture tMuebleCuartos = loadTexture("puertaropero");//SILLAS
+        Texture tMuebleCuartos2 = loadTexture("puertaropero2");//SILLAS
+        
+        
+        Texture tMuebleCuartosA = loadTexture("roperoA");//SILLAS  tMuebleCuartosA3,tMuebleCuartos3A
+        Texture tMuebleCuartosA3 = loadTexture("ropero2");//SILLAS
+        Texture tMuebleCuartos3A = loadTexture("ropero2A");//SILLAS
         Texture tPuerta = loadTexture("cama2");//SILLAS
         Texture tBañera = loadTexture("cama2");//SILLAS
         Texture tLavabo = loadTexture("cama2");//SILLAS
@@ -90,16 +101,37 @@ public class Main {
             glShadeModel(GL_SMOOTH);
             glLoadIdentity();
             cam.useView();
-            //tRestoCasa.setTextureFilter(5);
-            tRestoCasa.bind();
-           glBegin(GL_QUADS);
+            tCesped.bind();
+            glBegin(GL_QUADS);
             {
-                glTexCoord2f(0,0); glVertex3f(-0.5f, -0.5f, -0.5f);
-                glTexCoord2f(10, 0); glVertex3f(-0.5f, -0.5f, 18.5f);
-                glTexCoord2f(10, 10); glVertex3f(20.5f, -0.5f, 18.5f);
-                glTexCoord2f(0, 10); glVertex3f(20.5f, -0.5f, -0.5f);
+                glTexCoord2f(0,0); glVertex3f(-20f, -0.6f, -20.5f);
+                glTexCoord2f(10, 0); glVertex3f(-20f, -0.6f, 35.5f);
+                glTexCoord2f(10, 10); glVertex3f(35.5f, -0.6f, 35.5f);
+                glTexCoord2f(0, 10); glVertex3f(35.5f, -0.6f, -20.5f);
            }
             glEnd();
+            
+            tRestoCasa.bind();
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(0,0); glVertex3f(-00f, -0.5f, -0.5f);
+                glTexCoord2f(10, 0); glVertex3f(-00f, -0.5f, 16.5f);
+                glTexCoord2f(10, 10); glVertex3f(18.5f, -0.5f, 16.5f);
+                glTexCoord2f(0, 10); glVertex3f(18.5f, -0.5f, -0.5f);
+           }
+            glEnd();
+            tPisoCocina.bind();
+            glBegin(GL_QUADS);
+            {
+                glTexCoord2f(0,0); glVertex3f(0.5f, -0.4f,11.5f);
+                glTexCoord2f(10, 0); glVertex3f(0.5f, -0.4f, 16.5f);
+                glTexCoord2f(10, 10); glVertex3f(5.5f, -0.4f, 16.5f);
+                glTexCoord2f(0, 10); glVertex3f(5.5f, -0.4f, 11.5f);
+           }
+            glEnd();
+            
+            
+            
            //pintarSuelo2(tRestoCasa, tCocina);
            //CUARTOS
            pintarCuarto1(cubo, escena, tCuarto1, tCuarto2,tParedBlanca, tVentana, matriz);
@@ -132,7 +164,9 @@ public class Main {
            pintarPuerta(cubo, escena,tPuerta,matriz);
            pintarBañera(cubo, escena, tBañera,matriz);
            pintarLavabo(cubo, escena,tLavabo,matriz);
-           pintarMuebles(cubo, escena, tMuebles,matriz);
+           
+           //MUEBLES CUARTOS
+           pintarMuebles(cubo, escena, tMuebleCuartos , tMuebleCuartosA,tMuebleCuartos2,tMuebleCuartosA3,tMuebleCuartos3A,matriz);
            controles();
            Display.update();
         }
@@ -420,14 +454,29 @@ public class Main {
             glEnd();*/
  
             }
-    public static void pintarMuebles(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
-         tParedBlanca.bind();
+    public static void pintarMuebles(Cubo cubo,Escenarios escena, Texture tMuebleCuartos,Texture tMuebleCuartosA,Texture tMuebleCuartos2,Texture MuebleCuarto2,Texture MuebleCuarto2A, String[][] matriz){
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("MU") ){
-                        cubo.drawCube(1);
+                        tMuebleCuartosA.bind();
+                        cubo.mitadCuartoCuarto(1);
+                        tMuebleCuartos.bind();
+                        cubo.caraDerechaCuarto(1);
                     }
+                      if(matriz[x][z].equals("MV") ){
+                        tMuebleCuartosA.bind();
+                        cubo.mitadCuartoCuarto(1);
+                        tMuebleCuartos2.bind();
+                        cubo.caraDerechaCuarto(1);
+                    }
+                        if(matriz[x][z].equals("M2") ){
+                        MuebleCuarto2A.bind();
+                        cubo.mitadCuartoCuarto(1);
+                        MuebleCuarto2.bind();
+                        cubo.caraDerechaCuarto(1);
+                    }
+
                     glTranslatef(-x,0,-z);
                 }
     }
@@ -589,6 +638,8 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
         boolean subir=Keyboard.isKeyDown(Keyboard.KEY_E);
         boolean bajar=Keyboard.isKeyDown(Keyboard.KEY_Q);
         boolean reset=Keyboard.isKeyDown(Keyboard.KEY_R);
+        boolean reset2=Keyboard.isKeyDown(Keyboard.KEY_T);
+
         boolean pos=Keyboard.isKeyDown(Keyboard.KEY_SPACE);
         boolean coords=Keyboard.isKeyDown(Keyboard.KEY_P);
         float mx=Mouse.getDX();
@@ -649,7 +700,15 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
         cam.setRz(0);
         cam.setRy(90);
         }
-        
+        if(reset2){
+        cam.setX(-22);
+        cam.setZ(-7);
+        cam.setY(-7);
+        cam.setRx(32);
+        cam.setRz(0);
+        cam.setRy(269);
+        }
+
     }
 
     public static void cleanUp() {

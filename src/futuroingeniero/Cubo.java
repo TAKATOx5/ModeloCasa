@@ -159,7 +159,6 @@ public class Cubo {
     glTexCoord2d(0, 1); glVertex3f(size/2f,-size/4,size/1.9f);
     glTexCoord2d(1, 1); glVertex3f(size/2f,size/3,size/1.9f);
     glTexCoord2d(1, 0); glVertex3f(-size/2f,size/3,size/1.9f);
-   
     //glColor3f(size/2,0,0);
     glNormal3f(0,0,-1);
     glTexCoord2d(0, 0); glVertex3f(size/2f,-size/4,-size/1.9f);
@@ -307,6 +306,15 @@ public class Cubo {
     glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2);
     glTexCoord2d(1, 1); glVertex3f(size/2,size/2,-size/2);
     glTexCoord2d(1, 0); glVertex3f(size/2,size/2,size/2);
+    glEnd();
+ }
+  public void caraDerechaCuarto(float size){
+    glBegin(GL_QUADS);
+    glNormal3f(1,0,0);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/4,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/4,size/2);
     glEnd();
  }
   public void caraIzquierda(float size){
@@ -762,6 +770,40 @@ glRectf (-0.8f, -0.8f, 0.5f, 0.5f);
     glTexCoord2d(1, 0); glVertex3f(-size/2,-size/2,-size/2);
     glEnd();
     }
+  public void mitadCuartoCuarto(float size){
+    glBegin(GL_QUADS);
+    //CARA FRONTAL
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/4,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/4,size/2);
+    //Cara Posterior
+    glNormal3f(0,0,-1);
+    glTexCoord2d(0, 0); glVertex3f(size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/4,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(size/2,size/4,-size/2);
+    //Cara Lateral IZQ
+    glNormal3f(-1,0,0);    
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,-size/2);
+    glTexCoord2d(0, 1); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(-size/2,size/4,size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/4,-size/2);
+    //Cara superior
+    glNormal3f(0,1,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,size/4,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,size/4,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,size/4,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,size/4,-size/2);
+    //Cara inferior
+    glNormal3f(0,-1,0);
+    glTexCoord2d(0, 0); glVertex3f(-size/2,-size/2,size/2);
+    glTexCoord2d(0, 1); glVertex3f(size/2,-size/2,size/2);
+    glTexCoord2d(1, 1); glVertex3f(size/2,-size/4,-size/2);
+    glTexCoord2d(1, 0); glVertex3f(-size/2,-size/4,-size/2);
+    glEnd();
+    }
+
  public void paredBaño1(float size){
     glBegin(GL_QUADS);
     //CARA FRONTAL
