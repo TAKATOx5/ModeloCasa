@@ -32,13 +32,13 @@ public class Main {
     }
     public static void initGL() {
         cam=new Camera(70,(float) Display.getWidth()/Display.getHeight(), 0.3f,1000);
-        /*cam2=new Camera(70,(float) Display.getWidth()/Display.getHeight(), 0.3f,1000);
+        cam2=new Camera(70,(float) Display.getWidth()/Display.getHeight(), 0.3f,1000);
         cam2.setX(-9);
         cam2.setY(-2);
         cam2.setZ(2);
         cam2.setRx(33);
         cam2.setRy(180);
-        cam2.setRz(0);*/
+        cam2.setRz(0);
         glClearColor(0, 0, 0, 1);
         glEnable(GL_DEPTH_TEST);// Si dibujamos objetos, no se sobreponen, no se mezclan
         glEnable(GL_CULL_FACE);// Optimizacion, dibujar solo lo que está en pantalla
@@ -68,7 +68,7 @@ public class Main {
         Texture tCamaArriba = loadTexture("camaarriba");
         Texture tparedCocina= loadTexture("paredcocina");
         Texture tCocinaInterior =loadTexture("cocinainterior");
-        Texture tRestoCasa= loadTexture("pared");
+        Texture tRestoCasa= loadTexture("pisocorregido");
         
         //PISO
         Texture tPisoCocina= loadTexture("pisoCocina2");
@@ -76,7 +76,9 @@ public class Main {
 
         Texture tSilla = loadTexture("mesaarriba");//SILLAS
         Texture tMesa = loadTexture("cama2");//MESA
-        Texture tMesaarriba = loadTexture("mesaarriba");//MESA
+        Texture tMesaarriba = loadTexture("mesaFloor");//MESA
+        Texture tMesaarriba2 = loadTexture("mesafloor2");//MESA
+
         Texture tRefri = loadTexture("cama2");//SILLAS
         //ESTUFA
         Texture tEstufa = loadTexture("estufaFrente");
@@ -104,6 +106,7 @@ public class Main {
             tCesped.bind();
             glBegin(GL_QUADS);
             {
+                glNormal3f(0,1,0);
                 glTexCoord2f(0,0); glVertex3f(-20f, -0.6f, -20.5f);
                 glTexCoord2f(10, 0); glVertex3f(-20f, -0.6f, 35.5f);
                 glTexCoord2f(10, 10); glVertex3f(35.5f, -0.6f, 35.5f);
@@ -114,6 +117,7 @@ public class Main {
             tRestoCasa.bind();
             glBegin(GL_QUADS);
             {
+                glNormal3f(0,1,0);
                 glTexCoord2f(0,0); glVertex3f(-00f, -0.5f, -0.5f);
                 glTexCoord2f(10, 0); glVertex3f(-00f, -0.5f, 16.5f);
                 glTexCoord2f(10, 10); glVertex3f(18.5f, -0.5f, 16.5f);
@@ -123,6 +127,7 @@ public class Main {
             tPisoCocina.bind();
             glBegin(GL_QUADS);
             {
+                glNormal3f(0,1,0);
                 glTexCoord2f(0,0); glVertex3f(0.5f, -0.4f,11.5f);
                 glTexCoord2f(10, 0); glVertex3f(0.5f, -0.4f, 16.5f);
                 glTexCoord2f(10, 10); glVertex3f(5.5f, -0.4f, 16.5f);
@@ -136,7 +141,7 @@ public class Main {
            //CUARTOS
            pintarCuarto1(cubo, escena, tCuarto1, tCuarto2,tParedBlanca, tVentana, matriz);
            pintarBaño(cubo, escena, tParedBaño,tParedBaño2, tParedBañoFuera,tParedBlanca, tVentana,matriz);
-           pintaParedFueraBaño(cubo, escena, tCuarto1, tParedBaño2, tParedBañoFuera, tCuarto2,tCuarto1Fuera, matriz);
+           pintaParedFueraBaño(cubo, escena, tCuarto1, tParedBaño2, tParedBañoFuera, tCuarto2,tCuarto1Fuera,tparedCocina, matriz);
 
            //CASA
            pintarParedCasa2(cubo, escena, tParedBañoFuera,tParedBlanca,tParedBañoFuera, tVentana, matriz);
@@ -158,8 +163,9 @@ public class Main {
            
            pintarCama(cubo, escena, tCama,tCamaArriba, matriz);
            pintarParedBlanca(cubo, escena,tParedBlanca,matriz);
+           marcoPuerta(cubo, escena,tParedBlanca,matriz);
            pintarSillas(cubo, escena,tSilla,matriz);
-           pintarMesas(cubo, escena,tMesaarriba,matriz);
+           pintarMesas(cubo, escena,tMesaarriba, tMesaarriba2,matriz);
            pintarRefri(cubo, escena, tRefri,matriz);
            pintarPuerta(cubo, escena,tPuerta,matriz);
            pintarBañera(cubo, escena, tBañera,matriz);
@@ -257,12 +263,29 @@ public class Main {
                         tParedBaño.bind();
                         cubo.caraIzquierda(1);
                     }
+                    if(matriz[x][z].equals("T5")){
+                       tParedBaño2.bind();
+                        cubo.paredBaño1(1);
+                        tParedBaño.bind();
+                        cubo.caraLateralDerecha(1);
+                        tParedBlanca.bind();
+                        cubo.caraIzquierda(1);
+                    }
+                    
                     if(matriz[x][z].equals("C6")){
                         tParedBlanca.bind();
                         cubo.paredBaño2(1);
                         tParedBaño.bind();
                         cubo.caraFrontal(1);
                         tParedBaño.bind();
+                        cubo.caraIzquierda(1);
+                    }
+                    if(matriz[x][z].equals("T6")){
+                        tParedBlanca.bind();
+                        cubo.paredBaño2(1);
+                        tParedBaño.bind();
+                        cubo.caraFrontal(1);
+                        tParedBlanca.bind();
                         cubo.caraIzquierda(1);
                     }
                         if(matriz[x][z].equals("B4")){
@@ -272,6 +295,8 @@ public class Main {
                         cubo.caraLateralDerecha(1);
                         tParedBaño.bind();
                         cubo.caraIzquierda(1);
+                        glEnable(GL_BLEND);
+                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
                         tVentana.bind();
                         cubo.VentanaBaño3(1);
                     }
@@ -293,7 +318,19 @@ public class Main {
                 }
     }
     }
-       public static void pintaParedFueraBaño(Cubo cubo,Escenarios escena, Texture tParedBaño, Texture tParedFinal, Texture tParedFuera, Texture tCuarto2, Texture tCuarto1Fuera, String[][] matriz){
+              public static void marcoPuerta(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
+         tParedBlanca.bind();
+            for(int x=0;x<matriz.length;x++){
+                for(int z=0;z<matriz[x].length;z++){
+                    glTranslatef(x,0,z);
+                    if(matriz[x][z].equals("MP") ){
+                        cubo.marcoPuerta(1);
+                    }
+                    glTranslatef(-x,0,-z);
+                }
+    }
+    }
+       public static void pintaParedFueraBaño(Cubo cubo,Escenarios escena, Texture tParedBaño, Texture tParedFinal, Texture tParedFuera, Texture tCuarto2, Texture tCuarto1Fuera,Texture tParedCocina, String[][] matriz){
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
@@ -305,6 +342,18 @@ public class Main {
                         tParedFinal.bind();
                         cubo.paredCuarto2(1);
                     }
+                    if(matriz[x][z].equals("C7")){
+                        tParedBaño.bind();
+                        cubo.caraDerecha(1);
+                        tParedFuera.bind();
+                        cubo.caraIzquierda(1);
+                       // tParedFinal.bind();
+                                               tParedCocina.bind();
+
+                       cubo.paredCuarto2(1);
+                        
+                    }
+                    
                     
                     glTranslatef(-x,-0,-z);
                 }
@@ -358,6 +407,32 @@ public class Main {
                         tParedBlanca.bind();
                         cubo.pintarCocina2(1);
                     }
+                    if(matriz[x][z].equals("D4")){
+                        tparedCocina.bind();                       
+                        cubo.marcoPuertaDentro2(1);
+                        tCocinaInterior.bind();
+                        cubo.marcoPuertaFuera(1);
+                        tParedBlanca.bind();
+                        cubo.marcoPuertaResto(1);
+                    }
+                    
+                        if(matriz[x][z].equals("P2")){
+                        tparedCocina.bind();                       
+                        cubo.caraFrontal(1);
+                        tParedBlanca.bind();
+                        cubo.caraDerecha(1); 
+                        cubo.caraIzquierda(1);
+                        cubo.caraLateralDerecha(1);
+                        cubo.pintarCocina2(1);
+                    }
+                       if(matriz[x][z].equals("M3")){
+                        tParedBlanca.bind();                       
+                        cubo.marcoPuertaDentro2(1);
+                        tParedBlanca.bind();
+                        cubo.marcoPuertaResto(1);
+                    }
+                    
+                    
                     glTranslatef(-x,-0,-z);
                 }
             }
@@ -429,6 +504,7 @@ public class Main {
                         cubo.caraDerecha(1);
                         tParedFinal.bind();
                         cubo.mitadCuarto1(1);
+                        
                         tVentana.bind();
                         cubo.dibujarVentana4(1);
                         
@@ -597,6 +673,10 @@ public static void pintarSillon(Cubo cubo,Escenarios escena, Texture tParedBlanc
                         tParedBlanca.bind();
                         cubo.pintarSofa2(1);
                     }
+                    if(matriz[x][z].equals("SI") ){
+                        tParedBlanca.bind();
+                        cubo.pintarSofa(1);
+                    }
                        if(matriz[x][z].equals("S3") ){
                         tParedBlanca.bind();
                           cubo.pintarSofa(1);
@@ -607,12 +687,16 @@ public static void pintarSillon(Cubo cubo,Escenarios escena, Texture tParedBlanc
                 }
     }
     }
-public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca,String[][] matriz){
-         tParedBlanca.bind();
+public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca,Texture tmesa2, String[][] matriz){
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("ME") ){
+                       tParedBlanca.bind();
+                        cubo.Mesa(1);
+                    }
+                    if(matriz[x][z].equals("M5") ){
+                        tmesa2.bind();
                         cubo.Mesa(1);
                     }
                     glTranslatef(-x,0,-z);
@@ -646,7 +730,7 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
         float my=Mouse.getDY();
         mx*=0.10f;
         my*=0.10f;
-        float velMov=0.006f;
+        float velMov=0.2f;
         if(coords){
             System.out.println("coorX=" + cam.getX() );
             System.out.println("coorY=" + cam.getY() );
