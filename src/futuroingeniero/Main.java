@@ -69,7 +69,10 @@ public class Main {
         Texture tparedCocina= loadTexture("paredcocina");
         Texture tCocinaInterior =loadTexture("cocinainterior");
         Texture tRestoCasa= loadTexture("pisocorregido");
-        
+
+       Texture tCuartoInt2= loadTexture("cuartoInterno2");
+       Texture tCuartoInt= loadTexture("cuartoInterno1");
+
         //PISO
         Texture tPisoCocina= loadTexture("pisoCocina2");
         Texture tCesped= loadTexture("cesped");
@@ -136,15 +139,13 @@ public class Main {
             glEnd();
             
             
-            
+
            //pintarSuelo2(tRestoCasa, tCocina);
            //CUARTOS
-           pintarCuarto1(cubo, escena, tCuarto1, tCuarto2,tParedBlanca, tVentana, matriz);
-           pintarBaño(cubo, escena, tParedBaño,tParedBaño2, tParedBañoFuera,tParedBlanca, tVentana,matriz);
+
            pintaParedFueraBaño(cubo, escena, tCuarto1, tParedBaño2, tParedBañoFuera, tCuarto2,tCuarto1Fuera,tparedCocina, matriz);
 
            //CASA
-           pintarParedCasa2(cubo, escena, tParedBañoFuera,tParedBlanca,tParedBañoFuera, tVentana, matriz);
 
            //COCINA
            pintarCocina1(cubo, escena, tparedCocina,tParedBlanca, matriz);
@@ -152,15 +153,16 @@ public class Main {
            pintarEstufa(cubo, escena,tEstufa,tEstufaA,matriz);
            pintarMuebleCocina(cubo, escena,tMuebleCA,tMuebleC, matriz);
 
-
+          pintarVentana(cubo,escena,tVentana,tParedBañoFuera,tParedBlanca,matriz);
+           pintarBaño2(cubo,escena, tBaño,tParedBlanca,tVentana, matriz);
+           pintarParedCasa2(cubo, escena, tParedBañoFuera,tParedBlanca,tParedBañoFuera, tVentana, matriz);
+           pintarCuarto1(cubo, escena, tCuarto1, tCuarto2,tParedBlanca, tVentana,tCuartoInt2,tCuartoInt, matriz);
+           pintarBaño(cubo, escena, tParedBaño,tParedBaño2, tParedBañoFuera,tParedBlanca, tVentana,matriz);
             //Centro
           pintarSillon(cubo, escena, tSillones,matriz);
           pintarSofaEnmedio(cubo, escena, tSillones,tMuebleCentro,matriz);
-           
-           
-           pintarBaño2(cubo,escena, tBaño,tParedBlanca,tVentana, matriz);
-           pintarVentana(cubo,escena,tVentana,tParedBañoFuera,tParedBlanca,matriz);
-           
+
+
            pintarCama(cubo, escena, tCama,tCamaArriba, matriz);
            pintarParedBlanca(cubo, escena,tParedBlanca,matriz);
            marcoPuerta(cubo, escena,tParedBlanca,matriz);
@@ -170,7 +172,7 @@ public class Main {
            pintarPuerta(cubo, escena,tPuerta,matriz);
            pintarBañera(cubo, escena, tBañera,matriz);
            pintarLavabo(cubo, escena,tLavabo,matriz);
-           
+
            //MUEBLES CUARTOS
            pintarMuebles(cubo, escena, tMuebleCuartos , tMuebleCuartosA,tMuebleCuartos2,tMuebleCuartosA3,tMuebleCuartos3A,matriz);
            controles();
@@ -188,28 +190,47 @@ public class Main {
                         cubo.caraIzquierdaBaño(1);
                         tParedBlanca.bind();
                         cubo.cuboBaño(1);}
+                    
+                    
                         if(matriz[x][z].equals("B3") ){
                         tBaño.bind();
+                        cubo.caraIzquierdaVentana(1);
                         cubo.caraDerechaBaño(1);
-                        cubo.caraIzquierdaBaño(1);
                         tParedBlanca.bind();
-                        cubo.cuboBaño(1);
+                          cubo.CaraSuperior3(1);
+                        
+                        glEnable(GL_BLEND);
+                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+                        glDepthMask(false);
+                        glDisable(GL_LIGHTING);
+                          
+                          
                         tVentana.bind();
-                        cubo.dibujarVentana2(1);
+                        cubo.dibujarVentanaSuelo(1);
+                                            glDisable(GL_BLEND);
+                    glEnable(GL_LIGHTING);
+                    glDepthMask(true);
+                        
                     }
                     glTranslatef(-x,0,-z);
                 }
     }
     }
-       public static void pintarCuarto1(Cubo cubo,Escenarios escena, Texture tCuarto1, Texture tCuarto2,Texture tParedBlanca,Texture tVentana, String[][] matriz){
+       public static void pintarCuarto1(Cubo cubo,Escenarios escena, Texture tCuarto1, Texture tCuarto2,Texture tParedBlanca,Texture tVentana, Texture tCuartoInt2,Texture tCuartoInt1, String[][] matriz){
             for(int x=0;x<matriz.length;x++){
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
-                    if(matriz[x][z].equals("C1")){
+                    if(matriz[x][z].equals("K2")){
                         tParedBlanca.bind();
-                        cubo.mitadCuarto2(1);
-                        tCuarto2.bind();
-                        cubo.caraDerecha(1);
+                        cubo.sinCaraFrontal(1);
+                        tCuartoInt2.bind();
+                        cubo.caraFrontal(1);
+                    }
+                        if(matriz[x][z].equals("K1")){
+                        tParedBlanca.bind();
+                        cubo.sinCaraParaCuarto1(1);
+                        tCuartoInt1.bind();
+                        cubo.caraLateralDerecha(1);
                     }
                      if(matriz[x][z].equals("C2")){
                        tParedBlanca.bind();
@@ -230,20 +251,50 @@ public class Main {
                         cubo.mitadCuarto1(1);
                     }
                     if(matriz[x][z].equals("CV")){
+                        
+                        
                         tParedBlanca.bind();
-                        cubo.mitadCuarto2(1);
-                        tCuarto2.bind();
-                        cubo.caraDerecha(1);
-                        tVentana.bind();
-                        cubo.dibujarVentanaCuarto1(1);     
+                        cubo.CaraSuperior3(1);
+                        cubo.caraLateralDerechaVentana(1);
+                        tCuartoInt2.bind();
+                        cubo.caraFrontalVentana(1);
+                        glEnable(GL_BLEND);
+                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+                        glDepthMask(false);
+                        glDisable(GL_LIGHTING);
+                             /* glEnable(GL_BLEND);
+                             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
+                       tVentana.bind();
+                       cubo.ventanaLateralDerecha(1); 
+                       glDisable(GL_BLEND);
+                            glEnable(GL_LIGHTING);
+                            glDepthMask(true);
+                        //cubo.triangulo();*/      
+                        
                     }
                      if(matriz[x][z].equals("CB")){
+                
                         tParedBlanca.bind();
-                        cubo.mitadCuarto2(1);
-                        tCuarto2.bind();
-                        cubo.caraDerecha(1);
-                        tVentana.bind();
-                        cubo.dibujarVentanaCuarto1(1);    
+                        cubo.CaraSuperior3(1);
+                        cubo.caraFrontalVentana(1);
+
+                        tCuartoInt1.bind();
+                         cubo.caraLateralDerechaVentana(1);
+
+                        glEnable(GL_BLEND);
+                        glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+                        glDepthMask(false);
+                        glDisable(GL_LIGHTING);
+                             /* glEnable(GL_BLEND);
+                             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
+                       tVentana.bind();
+                       cubo.ventanaLateralDerecha(1); 
+                       glDisable(GL_BLEND);
+                            glEnable(GL_LIGHTING);
+                            glDepthMask(true);
+                        //cubo.triangulo();*/     
+                        
+                        
                     }
                     
                      
@@ -288,17 +339,32 @@ public class Main {
                         tParedBlanca.bind();
                         cubo.caraIzquierda(1);
                     }
-                        if(matriz[x][z].equals("B4")){
-                        tParedBaño2.bind();
-                        cubo.paredBaño1(1);
+                        if(matriz[x][z].equals("B4")){ 
+                       // tParedBaño2.bind();
+                      //  cubo.paredBaño1(1);
+                        
+                        /*tParedBaño.bind();
+                        cubo.caraLateralDerecha(1);*/
+                         tParedBlanca.bind();
+                        cubo.CaraSuperior3(1);
+                        cubo.mitadCuartoVentanaAtras(1);
                         tParedBaño.bind();
-                        cubo.caraLateralDerecha(1);
-                        tParedBaño.bind();
-                        cubo.caraIzquierda(1);
-                        glEnable(GL_BLEND);
+                        //cubo.caraIzquierda(1);
+                        cubo.mitadCuartoVentana(1);
+
+                       
+  
+                         glEnable(GL_BLEND);
                         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+                        glDepthMask(false);
+                        glDisable(GL_LIGHTING);
+                       
                         tVentana.bind();
-                        cubo.VentanaBaño3(1);
+                        cubo.dibujarVentana(1);
+                        
+                    glDisable(GL_BLEND);
+                    glEnable(GL_LIGHTING);
+                    glDepthMask(true);  
                     }
                     
                     
@@ -443,20 +509,25 @@ public class Main {
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("VE")){
-                       // glEnable(GL_BLEND);
+                        
+                        tParedFinal.bind();
+
+                        cubo.caraDerechaVentana(1);
+                        tParedBlanca.bind();
+                        //ubo.CaraSuperior(1);
+                        cubo.mitadCuartoVentana(1);
+                        
+                        glEnable(GL_BLEND);
                         glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
                         glDepthMask(false);
-                          glDisable(GL_LIGHTING);
-                        tParedBlanca.bind();
-                        cubo.caraDerecha(1);
-                        tParedFinal.bind();
-                        cubo.mitadCuarto1(1);
-                        tVentana.bind();
-                       cubo.dibujarVentana(1);
-                       //glDisable(GL_BLEND);
-    glEnable(GL_LIGHTING);
-    glDepthMask(true);
-                        //cubo.triangulo();
+                        glDisable(GL_LIGHTING);
+
+                    tVentana.bind();
+                    cubo.dibujarVentana(1);
+                    glDisable(GL_BLEND);
+                    glEnable(GL_LIGHTING);
+                    glDepthMask(true);
+                    //cubo.triangulo();*/
                     }
                     glTranslatef(-x,-0,-z);
                 }
@@ -500,13 +571,13 @@ public class Main {
                         cubo.mitadCuarto1(1);
                     }
                         if(matriz[x][z].equals("DV") ){
-                        tParedCocina.bind();
-                        cubo.caraDerecha(1);
+                        /*tParedCocina.bind();
+                        cubo.caraDerechaVentana2(1);*/
                         tParedFinal.bind();
-                        cubo.mitadCuarto1(1);
+                        cubo.mitadCuartoVentana2(1);
                         
-                        tVentana.bind();
-                        cubo.dibujarVentana4(1);
+                       /* tVentana.bind();
+                        cubo.dibujarVentana4(1);*/
                         
                         
                     }
@@ -665,6 +736,7 @@ public static void pintarSillon(Cubo cubo,Escenarios escena, Texture tParedBlanc
                 for(int z=0;z<matriz[x].length;z++){
                     glTranslatef(x,0,z);
                     if(matriz[x][z].equals("SO") ){
+              
                         tParedBlanca.bind();
                         cubo.pintarSofa(1);
                         
@@ -730,7 +802,8 @@ public static void pintarMesas(Cubo cubo,Escenarios escena, Texture tParedBlanca
         float my=Mouse.getDY();
         mx*=0.10f;
         my*=0.10f;
-        float velMov=0.2f;
+        float velMov=0.01f;
+        
         if(coords){
             System.out.println("coorX=" + cam.getX() );
             System.out.println("coorY=" + cam.getY() );
